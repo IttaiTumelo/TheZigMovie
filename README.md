@@ -31,7 +31,7 @@ Once the challenge is complete, please push the code up to a new private repo an
 
         - chilch  
         - musukwamoshi@gmail.com    
-        - thulani196 or thembothulani96@outlook.com
+        - fridaynyambe9@gmail.com
 
 ## Submission
 
@@ -60,14 +60,14 @@ Once the challenge is complete, please push the code up to a new private repo an
 ## Tech
 
 The technologies used to build this app are: 
-Client-Side - ReactJS, Webpack, TypeScript
-Server-Side - .NET Core Web Api 
+Client-Side - ReactJS, Vite, TypeScript
+Server-Side - .NET Core Web Api (.NET 8 or greater)
 
 ## Bonus Points
     
 1. Using Singleton Pattern for the Http Client that access the Movie API (Server-Side)
 2. Using Inversion of Control (aka Dependency Injection) throughout on the (Server-Side)
-3. Using React Hooks or Redux to manage state (Client-Side)
+3. Using React Hooks, Zustand  or Redux to manage state (Client-Side)
 4. Using React Router DOM for routing (Client-Side)
 5. Use bootstrap for styling the website (Client-Side)
 6. Add Swagger UI to document your API create a new API key and it will be listed under the heading "API Key (v3 auth)" 
