@@ -32,6 +32,7 @@ Once the challenge is complete, please push the code up to a new private repo an
         - chilch  
         - musukwamoshi@gmail.com    
         - fridaynyambe9@gmail.com
+        - thomasmunguya@gmail.com
 
 ## Submission
 
