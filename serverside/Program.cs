@@ -1,24 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-
-namespace serverside
+﻿global using Microsoft.AspNetCore.Builder;
+global using Microsoft.Extensions.DependencyInjection;
+global using serverside.Interfaces;
+global using serverside.Repositories;
+global using Microsoft.OpenApi;
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddControllers();
+builder.Services.AddCors(options =>
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateWebHostBuilder(args).Build().Run();
-        }
+    options.AddPolicy("AllowReactApp",
+        builder => builder
+            .WithOrigins("http://localhost:3000") 
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
-    }
-}
+builder.Services.AddHttpClient<IMovieRepository, MovieRepository>();
+
+// Add Swagger (Bonus Point: API Documentation)
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo 
+    { 
+        Title = "Movie API", 
+        Version = "v1",
+        Description = "API for fetching movie data from TheMovieDB"
+    });
+});
+
+var app = builder.Build();
+app.UseCors("AllowReactApp");
+app.UseDeveloperExceptionPage();
+                
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Movie API V1");
+    c.RoutePrefix = string.Empty; // Swagger at root URL
+});
+
+
+// app.UseHttpsRedirection();
+app.UseRouting();
+
+app.UseCors("AllowReactApp");
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();

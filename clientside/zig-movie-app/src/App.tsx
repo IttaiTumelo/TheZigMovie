@@ -1,22 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HomePage } from './pages/HomePage';
+import { DetailPage } from './pages/DetailPage';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import Description from './Description';
-import Header from './Header';
-import logo from './logo.svg';
 
-class App extends React.Component {
-  public render() {
-    return (
+const App: React.FC = () => {
+  return (
+    <Router>
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <Header name="CODER" />
-        </header>
-        <Description countBy={3} />
-      </div>
-    );
-  }
-}
+        <nav className="navbar navbar-dark bg-dark mb-4">
+          <div className="container">
+            <a className="navbar-brand" href="/">
+              🎬 Movie Explorer
+            </a>
+          </div>
+        </nav>
 
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/movie/:id" element={<DetailPage />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+};
 
 export default App;
