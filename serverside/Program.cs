@@ -3,8 +3,11 @@ global using Microsoft.Extensions.DependencyInjection;
 global using serverside.Interfaces;
 global using serverside.Repositories;
 global using Microsoft.OpenApi;
+using ServerSide.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
@@ -45,7 +48,20 @@ app.UseRouting();
 app.UseCors("AllowReactApp");
 
 app.UseAuthorization();
-
+app.UseExceptionHandler(new ExceptionHandlerOptions
+{
+    SuppressDiagnosticsCallback = (ctx) => 
+    {
+        // Example: Only suppress default logging for "expected" exceptions 
+        // that you already logged in your GlobalExceptionHandler
+        if (ctx.Exception is ArgumentException)
+        {
+            return true;
+        }
+        
+        return false;
+    }
+});
 app.MapControllers();
 
 app.Run();
